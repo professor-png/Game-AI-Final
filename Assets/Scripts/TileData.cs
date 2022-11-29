@@ -28,19 +28,26 @@ public class TileData : MonoBehaviour
         
     }
 
-    public void CreateTile(GameObject test)
+    public void CreateTile(GameObject tile)
     {
-        GameObject testObj1 = Instantiate(test);
+        GameObject newTile = Instantiate(tile);
 
-        Vector3 dif = transform.position - entrances[1].alignPt.position;
 
-        foreach (Entrance entrance in testObj1.GetComponent<TileData>().entrances)
+        //randomly select open option
+        foreach (Entrance entranceNT in newTile.GetComponent<TileData>().entrances)
         {
-            //if (entrances[1].direction == dir.right && entrance.direction == dir.left)
-            //    testObj1.transform.position = transform.position + entrance.alignPt.position - entrances[1].alignPt.position;
+            //if (entrances[1].direction == dir.right && entranceNT.direction == dir.left)
+            //    newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[1].alignPt.position;
 
-            if (entrances[0].direction == dir.left && entrance.direction == dir.right)
-                testObj1.transform.position = transform.position + entrance.alignPt.position - entrances[0].alignPt.position;
+            //if (entrances[0].direction == dir.left && entranceNT.direction == dir.right)
+            //    newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[0].alignPt.position;
+
+
+            //if (entrances[0].direction == dir.up && entranceNT.direction == dir.down)
+            //    newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[0].alignPt.position;
+
+            if (entrances[1].direction == dir.down && entranceNT.direction == dir.up)
+                newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[1].alignPt.position;
         }
     }
 }
