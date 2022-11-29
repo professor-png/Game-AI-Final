@@ -36,8 +36,11 @@ public class TileData : MonoBehaviour
 
         foreach (Entrance entrance in testObj1.GetComponent<TileData>().entrances)
         {
-            if (entrances[1].direction == dir.right && entrance.direction == dir.left)
-                testObj1.transform.position = transform.position + entrance.alignPt.position;
+            //if (entrances[1].direction == dir.right && entrance.direction == dir.left)
+            //    testObj1.transform.position = transform.position + entrance.alignPt.position - entrances[1].alignPt.position;
+
+            if (entrances[0].direction == dir.left && entrance.direction == dir.right)
+                testObj1.transform.position = transform.position + entrance.alignPt.position - entrances[0].alignPt.position;
         }
     }
 }
