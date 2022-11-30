@@ -28,26 +28,33 @@ public class TileData : MonoBehaviour
         
     }
 
-    public void CreateTile(GameObject tile)
+    public void CreateTile(GameObject tile, dir _dir)
     {
+        //_dir is from old to new
         GameObject newTile = Instantiate(tile);
 
-
-        //randomly select open option
         foreach (Entrance entranceNT in newTile.GetComponent<TileData>().entrances)
         {
-            //if (entrances[1].direction == dir.right && entranceNT.direction == dir.left)
-            //    newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[1].alignPt.position;
+            foreach(Entrance oldEntrance in entrances)
+            {
+                if(oldEntrance.direction == _dir)
+                {
+                    if ((_dir == dir.right && entranceNT.direction == dir.left) 
+                        || (_dir == dir.left && entranceNT.direction == dir.right)
+                        || (_dir == dir.up && entranceNT.direction == dir.down)
+                        || (_dir == dir.down && entranceNT.direction == dir.up))
+                        newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
 
-            //if (entrances[0].direction == dir.left && entranceNT.direction == dir.right)
-            //    newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[0].alignPt.position;
+                    //if (_dir == dir.left && entranceNT.direction == dir.right)
+                    //    newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
 
+                    //if (_dir == dir.up && entranceNT.direction == dir.down)
+                    //    newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
 
-            //if (entrances[0].direction == dir.up && entranceNT.direction == dir.down)
-            //    newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[0].alignPt.position;
-
-            if (entrances[1].direction == dir.down && entranceNT.direction == dir.up)
-                newTile.transform.position = transform.position + entranceNT.alignPt.position - entrances[1].alignPt.position;
+                    //if (_dir == dir.down && entranceNT.direction == dir.up)
+                    //    newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
+                }
+            }
         }
     }
 }

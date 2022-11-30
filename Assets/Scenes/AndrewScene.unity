@@ -171,6 +171,8 @@ MonoBehaviour:
   - {fileID: 4790985208793133057, guid: 0c2403e8c063cee47b4cea942d7eefdf, type: 3}
   - {fileID: 787579091617012230, guid: e3cabd51478511a46a7d79e71b19870d, type: 3}
   - {fileID: 2776458838396519153, guid: f14f3898d15f0d94ca93d72e5dd0ae06, type: 3}
+  testDir: 3
+  tileSelection: 2
 --- !u!1 &900891683
 GameObject:
   m_ObjectHideFlags: 0
