@@ -44,15 +44,6 @@ public class TileData : MonoBehaviour
                         || (_dir == dir.up && entranceNT.direction == dir.down)
                         || (_dir == dir.down && entranceNT.direction == dir.up))
                         newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
-
-                    //if (_dir == dir.left && entranceNT.direction == dir.right)
-                    //    newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
-
-                    //if (_dir == dir.up && entranceNT.direction == dir.down)
-                    //    newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
-
-                    //if (_dir == dir.down && entranceNT.direction == dir.up)
-                    //    newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
                 }
             }
         }
