@@ -850,8 +850,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6085840580662748212}
+  - component: {fileID: 8829878493606758783}
   m_Layer: 0
-  m_Name: Room
+  m_Name: Room1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -882,6 +883,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8829878493606758783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242071518764942275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb33daef833a8c499cb1c3920593f49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entrances:
+  - wall: {fileID: 2768238312217430439}
+    alignPt: {fileID: 2882338120667933244}
+    direction: 1
+  - wall: {fileID: 1877296527838209795}
+    alignPt: {fileID: 5737986249583556309}
+    direction: 0
+  - wall: {fileID: 7949425935398275437}
+    alignPt: {fileID: 8311151764317307050}
+    direction: 2
 --- !u!1 &5588103602599626308
 GameObject:
   m_ObjectHideFlags: 0
