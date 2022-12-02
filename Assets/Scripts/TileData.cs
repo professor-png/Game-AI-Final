@@ -14,7 +14,7 @@ public struct Entrance
 
 public class TileData : MonoBehaviour
 {
-    public Entrance[] entrances;
+    public List<Entrance> entrances;
 
     // Start is called before the first frame update
     void Start()
@@ -32,21 +32,37 @@ public class TileData : MonoBehaviour
     {
         //_dir is from old to new
         GameObject newTile = Instantiate(tile);
-
+        //rint(newTile.transform.position + " " + newTile.transform.name);
         foreach (Entrance entranceNT in newTile.GetComponent<TileData>().entrances)
         {
             foreach(Entrance oldEntrance in entrances)
             {
-                if(oldEntrance.direction == _dir)
+                if (oldEntrance.direction == _dir)
                 {
-                    if ((_dir == dir.right && entranceNT.direction == dir.left) 
+                    if ((_dir == dir.right && entranceNT.direction == dir.left)
                         || (_dir == dir.left && entranceNT.direction == dir.right)
                         || (_dir == dir.up && entranceNT.direction == dir.down)
                         || (_dir == dir.down && entranceNT.direction == dir.up))
-                        newTile.transform.position = transform.position - entranceNT.alignPt.position + oldEntrance.alignPt.position;
+                    {
+                        Vector3 dif = newTile.transform.position - entranceNT.alignPt.position;
+                        
+                        entranceNT.alignPt.position = oldEntrance.alignPt.position;
+                        
+                        newTile.transform.position = entranceNT.alignPt.position + dif;
+                        entranceNT.alignPt.position = newTile.transform.position - dif;
+
+                        Destroy(entranceNT.wall);
+                        Destroy(oldEntrance.wall);
+
+                        newTile.GetComponent<TileData>().entrances.Remove(entranceNT);
+                        entrances.Remove(oldEntrance);
+
+                        return newTile;
+                    }
                 }
             }
         }
+        
         return newTile;
     }
 }

@@ -6,40 +6,59 @@ public class LevelManager : MonoBehaviour
 {
     public List<GameObject> placedTiles;
 
-    public GameObject[] selectableTile;
+    public List<GameObject> selectableTile;
 
     dir movementDir;
     int tileSelection = 0;
     bool validTile = false;
     bool validDirection = false;
 
+    GameObject test;
+
     // Start is called before the first frame update
     void Start()
     {
-        GameObject test = Instantiate(selectableTile[0]);
-        placedTiles.Add(test);
+        Generate();
+    }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            foreach(GameObject tile in placedTiles)
+            {
+                Destroy(tile);
+            }
+
+            placedTiles.Clear();
+            Generate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GenerateNext();
+        }
+    }
+
+    private void Generate()
+    {
+        test = Instantiate(selectableTile[0]);
+        placedTiles.Add(test);
+    }
+
+    private void GenerateNext()
+    {
         checkNewTile(test);
-        //test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
+
         placedTiles.Add(test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir));
 
-        for (int i = 0; i < 1; i++)
-        {
-            test = placedTiles[placedTiles.Count - 1];
-            checkNewTile(test);
-
-            //test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
-            placedTiles.Add(test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir));
-        }
-
-        foreach (GameObject tile in placedTiles)
-        {
-            print(tile.name);
-        }
+        test = placedTiles[placedTiles.Count - 1];
+        //Debug.Log(movementDir);
     }
 
     void getNewDirection(GameObject currentTile)
     {
+        validDirection = false;
         do
         {
             //randomly choose direction to go
@@ -58,14 +77,14 @@ public class LevelManager : MonoBehaviour
 
     void checkNewTile(GameObject currentTile)
     {
+        validTile = false;
         do
         {
-            validDirection = false;
             getNewDirection(currentTile);
 
             //randomly choose tile to place
-            tileSelection = Random.Range(0, selectableTile.Length);
-
+            tileSelection = Random.Range(1, selectableTile.Count);
+            print(currentTile.GetComponent<TileData>().entrances.Count);
             //check tile for oppositie direction
             foreach (Entrance tileCheck in selectableTile[tileSelection].GetComponent<TileData>().entrances)
             {
