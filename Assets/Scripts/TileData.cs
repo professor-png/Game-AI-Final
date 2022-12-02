@@ -28,7 +28,7 @@ public class TileData : MonoBehaviour
         
     }
 
-    public void CreateTile(GameObject tile, dir _dir)
+    public GameObject CreateTile(GameObject tile, dir _dir)
     {
         //_dir is from old to new
         GameObject newTile = Instantiate(tile);
@@ -47,5 +47,6 @@ public class TileData : MonoBehaviour
                 }
             }
         }
+        return newTile;
     }
 }

@@ -17,22 +17,24 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         GameObject test = Instantiate(selectableTile[0]);
-
         placedTiles.Add(test);
 
         checkNewTile(test);
-
-        test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
-        placedTiles.Add(selectableTile[tileSelection]);
+        //test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
+        placedTiles.Add(test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir));
 
         for (int i = 0; i < 1; i++)
         {
             test = placedTiles[placedTiles.Count - 1];
             checkNewTile(test);
 
-            test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
-            Debug.Log(movementDir);
-            placedTiles.Add(selectableTile[tileSelection]);
+            //test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
+            placedTiles.Add(test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir));
+        }
+
+        foreach (GameObject tile in placedTiles)
+        {
+            print(tile.name);
         }
     }
 
