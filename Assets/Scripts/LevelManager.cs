@@ -16,12 +16,24 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject test = Instantiate(selectableTile[Random.Range(0,3)]);
+        GameObject test = Instantiate(selectableTile[0]);
+
         placedTiles.Add(test);
 
         checkNewTile(test);
 
         test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
+        placedTiles.Add(selectableTile[tileSelection]);
+
+        for (int i = 0; i < 1; i++)
+        {
+            test = placedTiles[placedTiles.Count - 1];
+            checkNewTile(test);
+
+            test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
+            Debug.Log(movementDir);
+            placedTiles.Add(selectableTile[tileSelection]);
+        }
     }
 
     void getNewDirection(GameObject currentTile)
