@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     bool validDirection = false;
 
     GameObject test;
+    int index = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -44,19 +45,20 @@ public class LevelManager : MonoBehaviour
     {
         test = Instantiate(selectableTile[0]);
         placedTiles.Add(test);
+        index = 0;
     }
 
     private void GenerateNext()
     {
-        checkNewTile(test);
+        checkNewTile(ref test);
 
         placedTiles.Add(test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir));
 
         test = placedTiles[placedTiles.Count - 1];
-        //Debug.Log(movementDir);
+        index++;
     }
 
-    void getNewDirection(GameObject currentTile)
+    void getNewDirection(ref GameObject currentTile)
     {
         validDirection = false;
         do
@@ -68,23 +70,33 @@ public class LevelManager : MonoBehaviour
                 if (movementDir == directionCheck.direction)
                 {
                     validDirection = true;
+                    index = placedTiles.Count - 1;
                     break;
                 }
+            }
+
+            if (validDirection == false)
+            {
+                index--;
+
+                if (index <= 0)
+                    index = placedTiles.Count - 1;
+
+                currentTile = placedTiles[index];
             }
 
         } while (!validDirection);
     }
 
-    void checkNewTile(GameObject currentTile)
+    void checkNewTile(ref GameObject currentTile)
     {
         validTile = false;
         do
         {
-            getNewDirection(currentTile);
+            getNewDirection(ref currentTile);
 
             //randomly choose tile to place
             tileSelection = Random.Range(1, selectableTile.Count);
-            print(currentTile.GetComponent<TileData>().entrances.Count);
             //check tile for oppositie direction
             foreach (Entrance tileCheck in selectableTile[tileSelection].GetComponent<TileData>().entrances)
             {

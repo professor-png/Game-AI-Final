@@ -14,6 +14,7 @@ public struct Entrance
 
 public class TileData : MonoBehaviour
 {
+    public List<CollisionCheck> walls;
     public List<Entrance> entrances;
 
     // Start is called before the first frame update
