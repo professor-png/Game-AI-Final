@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
     bool validTile = false;
     bool validDirection = false;
 
-    GameObject test;
+    GameObject test, last;
     int index = 0;
 
     // Start is called before the first frame update
@@ -22,11 +22,14 @@ public class LevelManager : MonoBehaviour
         Generate();
     }
 
+    private void FixedUpdate()
+    {
+        //if (placedTiles.Count > 0)
+        //    CheckLast();
+    }
+
     private void Update()
     {
-        if (placedTiles.Count > 0)
-            CheckLast();
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             foreach(GameObject tile in placedTiles)
@@ -41,6 +44,7 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             GenerateNext();
+            StartCoroutine(StartCheck());
         }
     }
 
@@ -53,12 +57,10 @@ public class LevelManager : MonoBehaviour
 
     private void GenerateNext()
     {
-        GameObject tmp = null;
-
         checkNewTile(ref test);
-        tmp = test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
+        last = test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
 
-        placedTiles.Add(tmp);
+        placedTiles.Add(last);
 
         test = placedTiles[placedTiles.Count - 1];
         index++;
@@ -118,22 +120,35 @@ public class LevelManager : MonoBehaviour
         } while (!validTile);
     }
 
+    IEnumerator StartCheck()
+    {
+        yield return new WaitForSeconds(.1f);
+
+        CheckLast();
+    }
+
     void CheckLast()
     {
-        GameObject last = placedTiles[placedTiles.Count - 1];
+        //last = placedTiles[placedTiles.Count - 1];
+
+        if (last == null)
+        {
+            Debug.Log("null");
+            return;
+        }
 
         bool lastSpace = last.GetComponent<TileData>().CheckSpace();
 
         if (lastSpace)
         {
-            print("ass");
             placedTiles.Remove(last);
             Destroy(last);
             test = placedTiles[placedTiles.Count - 1];
         }
         else
         {
-            last.GetComponent<TileData>().DeleteEntrance();
+            GameObject tmp = last.GetComponent<TileData>().from;
+            tmp.GetComponent<TileData>().DeleteEntrance();
         }
     }
 }

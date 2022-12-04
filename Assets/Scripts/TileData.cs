@@ -64,12 +64,12 @@ public class TileData : MonoBehaviour
                         
                         newTile.GetComponent<TileData>().from = gameObject;
                         
-                        //Destroy(entranceNT.wall);
+                        Destroy(entranceNT.wall);
                         //Destroy(oldEntrance.wall);
 
-                        //newTile.GetComponent<TileData>().entrances.Remove(entranceNT);
+                        newTile.GetComponent<TileData>().entrances.Remove(entranceNT);
                         //entrances.Remove(oldEntrance);
-
+                        
                         return newTile;
                     }
                 }
@@ -109,11 +109,11 @@ public class TileData : MonoBehaviour
         Destroy(tmpEntrance.wall);
         entrances.Remove(tmpEntrance);
 
-        if (from != null)
-        {
-            //Debug.Log(CheckSpace());
-            from.GetComponent<TileData>().DeleteEntrance();
-            from = null;
-        }
+        //if (from != null)
+        //{
+        //    //Debug.Log(CheckSpace());
+        //    from.GetComponent<TileData>().DeleteEntrance();
+        //    from = null;
+        //}
     }
 }
