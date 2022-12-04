@@ -24,6 +24,9 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
+        if (placedTiles.Count > 0)
+            CheckLast();
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             foreach(GameObject tile in placedTiles)
@@ -50,9 +53,12 @@ public class LevelManager : MonoBehaviour
 
     private void GenerateNext()
     {
-        checkNewTile(ref test);
+        GameObject tmp = null;
 
-        placedTiles.Add(test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir));
+        checkNewTile(ref test);
+        tmp = test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
+
+        placedTiles.Add(tmp);
 
         test = placedTiles[placedTiles.Count - 1];
         index++;
@@ -110,5 +116,24 @@ public class LevelManager : MonoBehaviour
                 }
             }
         } while (!validTile);
+    }
+
+    void CheckLast()
+    {
+        GameObject last = placedTiles[placedTiles.Count - 1];
+
+        bool lastSpace = last.GetComponent<TileData>().CheckSpace();
+
+        if (lastSpace)
+        {
+            print("ass");
+            placedTiles.Remove(last);
+            Destroy(last);
+            test = placedTiles[placedTiles.Count - 1];
+        }
+        else
+        {
+            last.GetComponent<TileData>().DeleteEntrance();
+        }
     }
 }

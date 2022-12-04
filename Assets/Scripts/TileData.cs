@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum dir { left, right, up, down};
 
@@ -17,8 +18,13 @@ public class TileData : MonoBehaviour
     public List<CollisionCheck> walls;
     public List<Entrance> entrances;
 
+    public List<CollisionCheck> center;
+
+    public GameObject from = null;
+    public Entrance tmpEntrance, test;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         
     }
@@ -45,18 +51,24 @@ public class TileData : MonoBehaviour
                         || (_dir == dir.up && entranceNT.direction == dir.down)
                         || (_dir == dir.down && entranceNT.direction == dir.up))
                     {
-                        Vector3 dif = newTile.transform.position - entranceNT.alignPt.position;
-                        
-                        entranceNT.alignPt.position = oldEntrance.alignPt.position;
-                        
-                        newTile.transform.position = entranceNT.alignPt.position + dif;
-                        entranceNT.alignPt.position = newTile.transform.position - dif;
+                        SetPosition(newTile, entranceNT, oldEntrance.alignPt.position);
 
-                        Destroy(entranceNT.wall);
-                        Destroy(oldEntrance.wall);
+                        //if (!newTile.GetComponent<TileData>().CheckSpace())
+                        //{
+                        //    Destroy(newTile);
+                        //    return null;
+                        //}
 
-                        newTile.GetComponent<TileData>().entrances.Remove(entranceNT);
-                        entrances.Remove(oldEntrance);
+                        tmpEntrance = oldEntrance;
+                        newTile.GetComponent<TileData>().tmpEntrance = entranceNT;
+                        
+                        newTile.GetComponent<TileData>().from = gameObject;
+                        
+                        //Destroy(entranceNT.wall);
+                        //Destroy(oldEntrance.wall);
+
+                        //newTile.GetComponent<TileData>().entrances.Remove(entranceNT);
+                        //entrances.Remove(oldEntrance);
 
                         return newTile;
                     }
@@ -65,5 +77,43 @@ public class TileData : MonoBehaviour
         }
         
         return newTile;
+    }
+
+    public bool CheckSpace()
+    {
+        bool vacant = false;
+
+        foreach(CollisionCheck check in center)
+        {
+            vacant = check.GetCollision();
+
+            if (vacant)
+                break;
+        }
+
+        return vacant;
+    }
+
+    public void SetPosition(GameObject newTile, Entrance entrance, Vector3 otherPos)
+    {
+        Vector3 dif = Vector3.zero - entrance.alignPt.position;
+
+        entrance.alignPt.position = otherPos;
+
+        newTile.transform.position = entrance.alignPt.position + dif;
+        entrance.alignPt.position = newTile.transform.position - dif;
+    }
+
+    public void DeleteEntrance()
+    {
+        Destroy(tmpEntrance.wall);
+        entrances.Remove(tmpEntrance);
+
+        if (from != null)
+        {
+            //Debug.Log(CheckSpace());
+            from.GetComponent<TileData>().DeleteEntrance();
+            from = null;
+        }
     }
 }
