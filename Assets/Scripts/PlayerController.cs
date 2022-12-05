@@ -39,4 +39,19 @@ public class PlayerController : MonoBehaviour
             rb.AddRelativeForce(Vector2.up * jumpSpeed);
         }
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (canJump == false)
+        {
+            rb.velocity = Vector2.zero;
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                canJump = false;
+                Vector2 dir = Vector3.up + (collision.transform.position - transform.position);
+                rb.AddRelativeForce(dir * jumpSpeed);
+            }
+        }
+    }
 }

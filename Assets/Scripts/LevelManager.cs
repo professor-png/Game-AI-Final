@@ -16,6 +16,9 @@ public class LevelManager : MonoBehaviour
     GameObject test, last;
     int index = 0;
 
+    public float generateTime = 0.2f;
+    float time = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,13 +27,12 @@ public class LevelManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (placedTiles.Count > 0)
-        //    CheckLast();
+        Tick();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             foreach(GameObject tile in placedTiles)
             {
@@ -41,11 +43,11 @@ public class LevelManager : MonoBehaviour
             Generate();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            GenerateNext();
-            StartCoroutine(StartCheck());
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    GenerateNext();
+        //    StartCoroutine(StartCheck());
+        //}
     }
 
     private void Generate()
@@ -64,6 +66,19 @@ public class LevelManager : MonoBehaviour
 
         test = placedTiles[placedTiles.Count - 1];
         index++;
+    }
+
+    void Tick()
+    {
+        time += Time.deltaTime;
+
+        if (time > generateTime)
+        {
+            GenerateNext();
+            StartCoroutine(StartCheck());
+
+            time = 0f;
+        }
     }
 
     void getNewDirection(ref GameObject currentTile)

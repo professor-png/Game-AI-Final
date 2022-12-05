@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4771555926009193128}
   - component: {fileID: 9076694845248356987}
   - component: {fileID: 1508764272771535075}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: SquareD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5127208010070513475}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: AlignPt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 3058570233061383}
   - component: {fileID: 375100425238868631}
   - component: {fileID: 3722895326096802719}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 1768800127360677164}
   - component: {fileID: 4836471183236798004}
   - component: {fileID: 6865539667230226964}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 6934445810178742852}
   - component: {fileID: 672597549366050693}
   - component: {fileID: 6935108159148386017}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6934445810479398464}
   - component: {fileID: 3385170513294252342}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Shaft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 4911636285711587637}
   - component: {fileID: 230519787534218470}
   - component: {fileID: 3676909841544680107}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: SquareU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -713,7 +713,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6693611877847386996}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: AlignPt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,7 +744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6437187294855812098}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: Centers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
