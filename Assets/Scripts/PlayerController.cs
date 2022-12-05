@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     float xMove = 0f;
     bool canJump = true;
+    int maxJumps = 2;
+    int numJumps = 0;
     float radiusCheck = 0.2f;
 
     public float xMoveSpeed = 5f;
@@ -21,7 +23,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         //Horizontal
         xMove = Input.GetAxis("Horizontal") * xMoveSpeed;
@@ -31,27 +33,18 @@ public class PlayerController : MonoBehaviour
         if (col == null)
             canJump = false;
         else
+        {
             canJump = true;
-
-        if (Input.GetKey(KeyCode.Space) && canJump)
-        {
-            canJump = false;
-            rb.AddRelativeForce(Vector2.up * jumpSpeed);
+            numJumps = 0;
         }
-    }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (canJump == false)
+        if (Input.GetKeyDown(KeyCode.Space) && numJumps < maxJumps)
         {
-            rb.velocity = Vector2.zero;
+            numJumps++;
+            rb.AddRelativeForce(Vector2.up * jumpSpeed * 2f);
 
-            if (Input.GetKey(KeyCode.Space))
-            {
+            if (numJumps > maxJumps)
                 canJump = false;
-                Vector2 dir = Vector3.up + (collision.transform.position - transform.position);
-                rb.AddRelativeForce(dir * jumpSpeed);
-            }
         }
     }
 }
