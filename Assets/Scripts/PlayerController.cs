@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D rb;
     public Transform groundCheck;
+    [HideInInspector]
+    public GameObject standingOn;
     public LayerMask ground;
 
     // Start is called before the first frame update
@@ -32,7 +34,10 @@ public class PlayerController : MonoBehaviour
         if (col == null)
         {
             numJumps = 0;
+            standingOn = null;
         }
+        else
+            standingOn = col.gameObject;
 
         Collider2D wallCol = Physics2D.OverlapCircle(new Vector3(transform.position.x + Input.GetAxis("Horizontal"), transform.position.y, transform.position.z), radiusCheck, ground);
 

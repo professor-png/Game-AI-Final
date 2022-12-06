@@ -177,4 +177,10 @@ MonoBehaviour:
   - {fileID: 7027247206950778034, guid: dccf32543c0211f469887d171742358b, type: 3}
   - {fileID: 2153905819892268686, guid: 42701fbd9054a094694876e06ee6a7d4, type: 3}
   - {fileID: 787579091617012230, guid: e3cabd51478511a46a7d79e71b19870d, type: 3}
-  generateTime: 0.3
+  deadEnds:
+  - {fileID: 5212527500391588718, guid: ad066473e2d175541b72ec3f1bc43b68, type: 3}
+  - {fileID: 5087411075340856868, guid: d0a44cd5c4b72aa478db7c449ac13713, type: 3}
+  - {fileID: 392451103951294285, guid: ad9b9e5c3dc88af4eaccfaefe6653a4e, type: 3}
+  - {fileID: 2579254199544839552, guid: f76a6ca7181d6584d873f95022f34a52, type: 3}
+  generateTime: 0.2
+  levelLength: 100

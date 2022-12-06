@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour
 
     public List<GameObject> selectableTile;
 
+    public List<GameObject> deadEnds;
+
     dir movementDir;
     int tileSelection = 0;
     bool validTile = false;
@@ -17,7 +19,10 @@ public class LevelManager : MonoBehaviour
     int index = 0;
 
     public float generateTime = 0.2f;
+    public float levelLength;
     float time = 0;
+
+    bool generate = true;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +32,18 @@ public class LevelManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Tick();
+        if (generate)
+        {
+            if (Vector2.Distance(placedTiles[placedTiles.Count - 1].transform.position, Vector2.zero) > levelLength)
+            {
+                //time = generateTime * 2f;
+                //Tick(deadEnds);
+                PlaceDeadEnd();
+                generate = false;
+            }
+            else
+                Tick(selectableTile);
+        }
     }
 
     private void Update()
@@ -38,16 +54,10 @@ public class LevelManager : MonoBehaviour
             {
                 Destroy(tile);
             }
-
+            generate = true;
             placedTiles.Clear();
             Generate();
         }
-
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    GenerateNext();
-        //    StartCoroutine(StartCheck());
-        //}
     }
 
     private void Generate()
@@ -57,9 +67,9 @@ public class LevelManager : MonoBehaviour
         index = 0;
     }
 
-    private void GenerateNext()
+    private void GenerateNext(List<GameObject> tiles)
     {
-        checkNewTile(ref test);
+        checkNewTile(ref test, tiles);
         last = test.GetComponent<TileData>().CreateTile(selectableTile[tileSelection], movementDir);
 
         placedTiles.Add(last);
@@ -68,13 +78,13 @@ public class LevelManager : MonoBehaviour
         index++;
     }
 
-    void Tick()
+    void Tick(List<GameObject> tiles)
     {
         time += Time.deltaTime;
 
-        if (time > generateTime)
+        if (time >= generateTime)
         {
-            GenerateNext();
+            GenerateNext(tiles);
             StartCoroutine(StartCheck());
 
             time = 0f;
@@ -111,7 +121,7 @@ public class LevelManager : MonoBehaviour
         } while (!validDirection);
     }
 
-    void checkNewTile(ref GameObject currentTile)
+    void checkNewTile(ref GameObject currentTile, List<GameObject> tiles)
     {
         validTile = false;
         do
@@ -119,9 +129,9 @@ public class LevelManager : MonoBehaviour
             getNewDirection(ref currentTile);
 
             //randomly choose tile to place
-            tileSelection = Random.Range(1, selectableTile.Count);
+            tileSelection = Random.Range(1, tiles.Count);
             //check tile for oppositie direction
-            foreach (Entrance tileCheck in selectableTile[tileSelection].GetComponent<TileData>().entrances)
+            foreach (Entrance tileCheck in tiles[tileSelection].GetComponent<TileData>().entrances)
             {
                 if ((movementDir == dir.up && tileCheck.direction == dir.down) ||
                     (movementDir == dir.down && tileCheck.direction == dir.up) ||
@@ -135,9 +145,46 @@ public class LevelManager : MonoBehaviour
         } while (!validTile);
     }
 
+    void PlaceDeadEnd()
+    {
+        validDirection = false;
+        do
+        {
+            //randomly choose direction to go
+            movementDir = (dir)Random.Range(0, 3);
+            foreach (Entrance directionCheck in placedTiles[placedTiles.Count - 1].GetComponent<TileData>().entrances)
+            {
+                if (movementDir == directionCheck.direction)
+                {
+                    validDirection = true;
+                    break;
+                }
+            }
+
+        } while (!validDirection);
+
+        foreach (GameObject obj in deadEnds)
+        {
+            Entrance tileCheck = obj.GetComponent<TileData>().entrances[0];
+
+            if ((movementDir == dir.up && tileCheck.direction == dir.down) ||
+                    (movementDir == dir.down && tileCheck.direction == dir.up) ||
+                    (movementDir == dir.left && tileCheck.direction == dir.right) ||
+                    (movementDir == dir.right && tileCheck.direction == dir.left))
+            {
+                last = test.GetComponent<TileData>().CreateTile(obj, movementDir);
+
+                placedTiles.Add(last);
+                break;
+            }
+        }
+
+        StartCoroutine(StartCheck());
+    }
+
     IEnumerator StartCheck()
     {
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForFixedUpdate();
 
         CheckLast();
     }
