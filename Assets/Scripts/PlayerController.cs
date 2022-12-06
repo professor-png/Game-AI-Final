@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     float xMove = 0f;
-    bool canJump = true;
     int maxJumps = 2;
     int numJumps = 0;
     float radiusCheck = 0.2f;
@@ -31,20 +30,21 @@ public class PlayerController : MonoBehaviour
 
         Collider2D col = Physics2D.OverlapCircle(groundCheck.position, radiusCheck, ground);
         if (col == null)
-            canJump = false;
-        else
         {
-            canJump = true;
+            numJumps = 0;
+        }
+
+        Collider2D wallCol = Physics2D.OverlapCircle(new Vector3(transform.position.x + Input.GetAxis("Horizontal"), transform.position.y, transform.position.z), radiusCheck, ground);
+
+        if (wallCol == null)
+        {
             numJumps = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && numJumps < maxJumps)
         {
             numJumps++;
-            rb.AddRelativeForce(Vector2.up * jumpSpeed * 2f);
-
-            if (numJumps > maxJumps)
-                canJump = false;
+            rb.velocity = Vector2.up * jumpSpeed;
         }
     }
 }

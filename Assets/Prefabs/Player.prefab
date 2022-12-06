@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   xMoveSpeed: 5
-  jumpSpeed: 150
+  jumpSpeed: 8
   rb: {fileID: 6724402556491988154}
   groundCheck: {fileID: 6724402555624363534}
   ground:
