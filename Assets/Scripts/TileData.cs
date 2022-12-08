@@ -108,12 +108,5 @@ public class TileData : MonoBehaviour
     {
         Destroy(tmpEntrance.wall);
         entrances.Remove(tmpEntrance);
-
-        //if (from != null)
-        //{
-        //    //Debug.Log(CheckSpace());
-        //    from.GetComponent<TileData>().DeleteEntrance();
-        //    from = null;
-        //}
     }
 }

@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
 
     public List<GameObject> deadEnds;
 
+    public TrailRenderer path;
+
     dir movementDir;
     int tileSelection = 0;
     bool validTile = false;
@@ -39,6 +41,7 @@ public class LevelManager : MonoBehaviour
                 //time = generateTime * 2f;
                 //Tick(deadEnds);
                 PlaceDeadEnd();
+                Backtrack();
                 generate = false;
             }
             else
@@ -55,6 +58,7 @@ public class LevelManager : MonoBehaviour
                 Destroy(tile);
             }
             generate = true;
+            path.Clear();
             placedTiles.Clear();
             Generate();
         }
@@ -180,6 +184,17 @@ public class LevelManager : MonoBehaviour
         }
 
         StartCoroutine(StartCheck());
+    }
+
+    void Backtrack()
+    {
+        GameObject tmp = placedTiles[placedTiles.Count - 1];
+
+        while (tmp != placedTiles[0])
+        {
+            path.AddPosition(tmp.transform.position);
+            tmp = tmp.GetComponent<TileData>().from;
+        }
     }
 
     IEnumerator StartCheck()
