@@ -97,6 +97,7 @@ public class LevelManager : MonoBehaviour
 
     void getNewDirection(ref GameObject currentTile)
     {
+        int loopBreak = 0;
         validDirection = false;
         do
         {
@@ -107,7 +108,6 @@ public class LevelManager : MonoBehaviour
                 if (movementDir == directionCheck.direction)
                 {
                     validDirection = true;
-                    index = placedTiles.Count - 1;
                     break;
                 }
             }
@@ -120,6 +120,13 @@ public class LevelManager : MonoBehaviour
                     index = placedTiles.Count - 1;
 
                 currentTile = placedTiles[index];
+            }
+
+            loopBreak++;
+            if (loopBreak > 100)
+            {
+                Debug.Log("Infinite Loop!!");
+                Debug.Break();
             }
 
         } while (!validDirection);
